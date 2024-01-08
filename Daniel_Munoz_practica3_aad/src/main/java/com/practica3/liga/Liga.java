@@ -92,7 +92,6 @@ public class Liga {
 	private static void sumarPuntuacion(int posicion_lista, int puntuacion_sumar) {
 		int puntuacion_total = clasificacion.get(posicion_lista).getPuntuacion();
 		puntuacion_total += puntuacion_sumar;
-		System.out.println(puntuacion_total);
 		clasificacion.get(posicion_lista).setPuntuacion(puntuacion_total);
 	}
 
