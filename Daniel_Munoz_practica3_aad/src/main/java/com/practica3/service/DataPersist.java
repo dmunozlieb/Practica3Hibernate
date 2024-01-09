@@ -5,8 +5,10 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.practica3.data.GenerarCompeticion;
 import com.practica3.data.GenerarEquipos;
 import com.practica3.model.Clasificacion;
+import com.practica3.model.Competicion;
 import com.practica3.model.Equipo;
 import com.practica3.model.Partido;
 
@@ -24,6 +26,7 @@ public class DataPersist {
 		try {
 			persistEquipos();
 			persistClasificacion();
+			persistCompeticion();
 		} catch (PersistenceException persistence) {
 			entitymanager.getTransaction().rollback();
 			LOGGER.error("Error - " + persistence.getMessage());
@@ -73,6 +76,21 @@ public class DataPersist {
 		
 	}
 
+	private void persistCompeticion() {
+		try {
+			entitymanager.getTransaction().begin();
+			for(Competicion competicion:GenerarCompeticion.generarCompeticiones()) {
+				entitymanager.persist(competicion);
+			}
+			entitymanager.getTransaction().commit();
+		} catch (PersistenceException persistence) {
+			LOGGER.error("Error - " + persistence.getMessage());
+			entitymanager.getTransaction().rollback();
+		} catch (Exception e) {
+			LOGGER.error("Error - " + e.getMessage());
+			entitymanager.getTransaction().rollback();
+		}
+	}
 	
 	public void actualizarClasificacion(List<Clasificacion> nueva_clasificacion) {
 		try {

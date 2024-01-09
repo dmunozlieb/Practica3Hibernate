@@ -18,6 +18,8 @@ public class Competicion {
 	private String nombreCompeticion;
 	@Column (name = "start_date")
 	private LocalDate fechaCreacion;
+	@Column (name = "numbers_of_matchday")
+	private int numJornadas;
 	@Column (name = "numbers_of_teams")
 	private int numEquipos;
 	
@@ -26,11 +28,11 @@ public class Competicion {
 		
 	}
 
-	public Competicion(String nombreCompeticion, LocalDate fechaCreacion, int numEquipos) {
-		
+	public Competicion(String nombreCompeticion, LocalDate fechaCreacion, int numJornadas,int numEquipos) {		
 		this.nombreCompeticion = nombreCompeticion;
 		this.fechaCreacion = fechaCreacion;
-		this.numEquipos = numEquipos;
+		this.numJornadas = numJornadas;
+		this.numEquipos = numEquipos;	
 	}
 
 	public Long getId() {
