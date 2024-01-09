@@ -6,9 +6,9 @@ import com.practica3.model.Equipo;
 import com.practica3.model.Jugador;
 
 public interface GestionDAO<T> {
-	void insert(Jugador player, int id_equipo);
+	<T>void insert(T o1);
 
-	void remove(Jugador player);
+	<T>void remove(T o1);
 
 	<T> T find(Class<T> className, int id);
 

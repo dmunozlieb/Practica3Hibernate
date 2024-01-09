@@ -18,10 +18,10 @@ public class GestionEquipo<T> implements GestionDAO<T> {
 	private static final Logger LOGGER = LogManager.getLogger(GestionEquipo.class);
 
 	@Override
-	public void insert(Jugador player, int id_equipo) {
+	public <T> void insert(T o1) {
 		try {
 			entitymanager.getTransaction().begin();
-
+			entitymanager.persist(o1);
 			entitymanager.getTransaction().commit();
 		} catch (PersistenceException persistence) {
 			LOGGER.error("Error - " + persistence.getMessage());
@@ -29,14 +29,14 @@ public class GestionEquipo<T> implements GestionDAO<T> {
 		} catch (Exception e) {
 			LOGGER.error("Error - " + e.getMessage());
 			entitymanager.getTransaction().rollback();
-		}		
+		}
 	}
 
 	@Override
-	public void remove(Jugador player) {
+	public <T> void remove(T o1) {
 		try {
 			entitymanager.getTransaction().begin();
-			entitymanager.remove(player);
+			entitymanager.remove(o1);
 			entitymanager.getTransaction().commit();
 		} catch (PersistenceException persistence) {
 			LOGGER.error("Error - " + persistence.getMessage());
@@ -86,7 +86,7 @@ public class GestionEquipo<T> implements GestionDAO<T> {
 	}
 
 	@Override
-	public <T>void update(T o1) {
+	public <T> void update(T o1) {
 		try {
 			entitymanager.getTransaction().begin();
 			entitymanager.merge(o1);
@@ -100,7 +100,7 @@ public class GestionEquipo<T> implements GestionDAO<T> {
 			e.printStackTrace();
 			entitymanager.getTransaction().rollback();
 		}
-		
+
 	}
 
 }
