@@ -23,14 +23,26 @@ public class Liga {
 	private static GestionEquipo<Object> gestion;
 
 	public static void ejecutarLiga() {
-		gestion = new GestionEquipo<>();
-		persistencia = new DataPersist();
-		persistencia.dataPersist();
+		inicializarGestionYPersistencia();
 		clasificacion = gestion.findAll(Clasificacion.class);
 		LOGGER.info(" * * * * LIGA ASOBAL * * * * ");
 		LOGGER.info(" --------------------------- ");
 		int total_jornadas = clasificacion.size() - 1;
 		int mitadEquipo = clasificacion.size() / 2;
+		realizarJornada(total_jornadas,  mitadEquipo);
+		persistencia.persistPartidos(partidos_liga);
+		persistencia.actualizarClasificacion(clasificacion);	
+		traspasos();
+		DataPersist.shutdown();	
+	}
+	
+	private static void inicializarGestionYPersistencia() {
+	    gestion = new GestionEquipo<>();
+	    persistencia = new DataPersist();
+	    persistencia.dataPersist();
+	}
+	
+	private static void realizarJornada(int total_jornadas, int mitadEquipo) {
 		for (int jornada = 0; jornada < total_jornadas; jornada++) {
 			sb = new StringBuilder();
 			LOGGER.info(" - - - Jornada " + (jornada + 1) + " - - - ");
@@ -61,16 +73,17 @@ public class Liga {
 						generarPartido((jornada + 1), equipo_local, equipo_visitante, goles_locales, goles_visitantes));
 
 			}
-			LOGGER.info(" - - - Resultados - - - ");
-			LOGGER.info(" |____________________| ");
-			LOGGER.info(sb.toString());
+			mostrarResultados();
+			//Rotación de partidos
 			Collections.rotate(clasificacion.subList(1, clasificacion.size()), 1);
 
 		}
-		persistencia.persistPartidos(partidos_liga);
-		persistencia.actualizarClasificacion(clasificacion);	
-		traspasos();
-		DataPersist.shutdown();	
+	}
+	
+	private static void mostrarResultados() {
+	    LOGGER.info(" - - - Resultados - - - ");
+	    LOGGER.info(" |____________________| ");
+	    LOGGER.info(sb.toString());
 	}
 
 	private static boolean ganaLocal(int goles_local, int goles_visitante) {
