@@ -16,8 +16,6 @@ public class Clasificacion {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_clasification")
 	private Long id;
-	@Column(name = "position", nullable = false, precision = 1)
-	private Integer posicion;
 	@ManyToOne
 	@JoinColumn(name = "id_team")
 	private Equipo equipo;
@@ -34,10 +32,10 @@ public class Clasificacion {
 
 	}
 
-	public Clasificacion(Integer posicion, Equipo equipo, Integer puntuacion, Integer partidos_ganados,
+	public Clasificacion(Equipo equipo, Integer puntuacion, Integer partidos_ganados,
 			Integer partidos_empatados, Integer partidos_perdidos) {
 
-		this.posicion = posicion;
+		
 		this.equipo = equipo;
 		this.puntuacion = puntuacion;
 		this.partidos_ganados = partidos_ganados;
@@ -53,13 +51,7 @@ public class Clasificacion {
 		this.id = id;
 	}
 
-	public Integer getPosicion() {
-		return posicion;
-	}
-
-	public void setPosicion(Integer posicion) {
-		this.posicion = posicion;
-	}
+	
 
 	public Equipo getEquipo() {
 		return equipo;
@@ -103,7 +95,7 @@ public class Clasificacion {
 
 	@Override
 	public String toString() {
-		return "Clasificacion [id=" + id + ", posicion=" + posicion + ", equipo=" + equipo + ", puntuacion="
+		return "Clasificacion [id=" + id + ", equipo=" + equipo + ", puntuacion="
 				+ puntuacion + ", partidos_ganados=" + partidos_ganados + ", partidos_empatados=" + partidos_empatados
 				+ ", partidos_perdidos=" + partidos_perdidos + "]";
 	}

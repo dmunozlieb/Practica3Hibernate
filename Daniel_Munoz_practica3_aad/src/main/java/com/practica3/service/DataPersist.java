@@ -52,7 +52,7 @@ public class DataPersist {
 		List<Equipo> equipos_registrados = gestion.findAll(Equipo.class);
 		entitymanager.getTransaction().begin();
 		for (Equipo equipo : equipos_registrados) {
-			entitymanager.persist(new Clasificacion(0, equipo, 0, 0, 0, 0));
+			entitymanager.persist(new Clasificacion(equipo, 0, 0, 0, 0));
 		}
 		entitymanager.getTransaction().commit();
 	}

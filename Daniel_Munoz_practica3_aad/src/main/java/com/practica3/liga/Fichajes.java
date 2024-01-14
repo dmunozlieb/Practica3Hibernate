@@ -21,7 +21,7 @@ public class Fichajes <T>{
 		intercambioJugadores();
 		fichajeBidasoa();
 		ratiradaJugador();
-		fichajeValladolid();
+		fichajeViveros();
 	}
 	
 	private void intercambioJugadores() {
@@ -53,21 +53,22 @@ public class Fichajes <T>{
 	}
 	
 	private void ratiradaJugador() {
-		LOGGER.info("** Nicoló D´Antino - RECOLETAS AT. VALLADOLID ha tomado la decisión de retirarse del balonmano **");
-		Equipo valladolid = gestion.find(Equipo.class, 5);
-		Jugador antino = gestion.find(Jugador.class, 33);
-		valladolid.eliminarJugador(antino);
-		gestion.remove(antino);
-		gestion.update(valladolid);	
+		LOGGER.info("** Isaías Guardiola - VIVEROS HEROL BM. NAVA ha tomado la decisión de retirarse del balonmano **");
+		LOGGER.info("** Isaías Guardiola - LD ");
+		Equipo viveros = gestion.find(Equipo.class, 8);
+		Jugador isaias = gestion.find(Jugador.class, 52);
+		viveros.eliminarJugador(isaias);
+		gestion.remove(isaias);
+		gestion.update(viveros);	
 	}
 	
-	private void fichajeValladolid() {
-		LOGGER.info("** Fichaje del RECOLETAS AT. VALLADOLID, nuevo jugador incorporado **");
-		LOGGER.info("** Álvaro Gastón ---> 34000 **");
-		Equipo valladolid = gestion.find(Equipo.class, 5);
-		valladolid.agregarJugador(new Jugador("Álvaro Gastón", LocalDate.parse("21/06/1993",PATTERN),"España","Extremo derecho",181,73));
-		valladolid.setRenumeracion(restaSalarial(valladolid, 34000));
-		gestion.update(valladolid);
+	private void fichajeViveros() {
+		LOGGER.info("** Fichaje del VIVEROS HEROL BM. NAVA, nuevo jugador incorporado **");
+		LOGGER.info("** Alvaro Del Valle ---> 34000 **");
+		Equipo viveros = gestion.find(Equipo.class, 8);
+		viveros.agregarJugador(new Jugador("Alvaro Del Valle", LocalDate.parse("21/01/1994",PATTERN),"España","Lateral derecho",192,92));
+		viveros.setRenumeracion(restaSalarial(viveros, 34000));
+		gestion.update(viveros);
 	}
 	
 	private double restaSalarial(Equipo equipo, double cantidad) {

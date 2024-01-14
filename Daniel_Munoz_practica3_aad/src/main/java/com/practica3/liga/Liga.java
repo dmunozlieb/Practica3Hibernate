@@ -7,7 +7,6 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.practica3.data.OrdenarClasificacion;
 import com.practica3.model.Clasificacion;
 import com.practica3.model.Equipo;
 import com.practica3.model.Partido;
@@ -68,7 +67,6 @@ public class Liga {
 			Collections.rotate(clasificacion.subList(1, clasificacion.size()), 1);
 
 		}
-		almacenarPosicion();
 		persistencia.persistPartidos(partidos_liga);
 		persistencia.actualizarClasificacion(clasificacion);	
 		traspasos();
@@ -129,12 +127,6 @@ public class Liga {
 		return new Partido(num_jornada, equipo_local, equipo_visitante, resultado_local, resultado_visitante, null);
 	}
 
-	private static void almacenarPosicion() {
-		Collections.sort(clasificacion, new OrdenarClasificacion());
-		for (int i = 0; i < clasificacion.size(); i++) {
-			clasificacion.get(i).setPosicion(i + 1);
-		}
-	}
 
 	private static <T> void traspasos() {
 		Fichajes<T> fichajes = new Fichajes<>();

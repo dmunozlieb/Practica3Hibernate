@@ -43,7 +43,11 @@ public class GenerarEquipos {
 						new Estadio("Polideportivo Huerta Del Rey", "Valladolid",
 								LocalDate.parse("17/07/1975", PATTERN))),
 				new Equipo("BATHCO BM. TORRELAVEGA", 125734.67, new Estadio("Pabellón Municipal Vicente Trueba",
-						"Torrelavega", LocalDate.parse("09/02/1986", PATTERN)))));
+						"Torrelavega", LocalDate.parse("09/02/1986", PATTERN))),
+				new Equipo("HELVETIA ANAITASUNA", 101000.67, new Estadio("Pabellón Anaitasuna",
+						"Pamplona", LocalDate.parse("19/02/1976", PATTERN))),
+				new Equipo("VIVEROS HEROL BM. NAVA", 86456.67, new Estadio("Pabellón Municipal Guerreros Naveros",
+						"Nava de la Asunción", LocalDate.parse("22/07/1996", PATTERN)))));
 	}
 
 	private static void addJugadores(ArrayList<Equipo> equipos) {
@@ -53,6 +57,8 @@ public class GenerarEquipos {
 		equipos.get(3).agregarJugadores(GenerarJugadores.jugadoresRioja());
 		equipos.get(4).agregarJugadores(GenerarJugadores.jugadoresValladolid());
 		equipos.get(5).agregarJugadores(GenerarJugadores.jugadoresTorrelavega());
+		equipos.get(6).agregarJugadores(GenerarJugadores.jugadoresHelvetia());
+		equipos.get(7).agregarJugadores(GenerarJugadores.jugadoresViveros());
 	}
 
 	private static void addSponsors(ArrayList<Equipo> equipos) {
@@ -67,6 +73,6 @@ public class GenerarEquipos {
 		equipos.get(2).agregarSponsor(GenerarSponsors.sponsorGameTime());
 		equipos.get(3).agregarSponsor(GenerarSponsors.sponsorNike());
 		equipos.get(4).agregarSponsor(GenerarSponsors.sponsorMetro());
-
+		equipos.get(6).agregarSponsor(GenerarSponsors.sponsorConnect());
 	}
 }
