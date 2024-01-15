@@ -103,4 +103,11 @@ public class GestionEquipo<T> implements GestionDAO<T> {
 
 	}
 
+	@Override
+	public void shutdown() {
+		entitymanager.close();
+	}
+	
+	
+
 }

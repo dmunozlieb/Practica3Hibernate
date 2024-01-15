@@ -15,4 +15,6 @@ public interface GestionDAO<T> {
 	<T>List<T> findAll(Class<T> className);
 	
 	<T>void update(T o1);
+	
+	void shutdown();
 }

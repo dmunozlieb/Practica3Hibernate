@@ -18,98 +18,73 @@ import jakarta.persistence.TypedQuery;
 
 public class DataPersist {
 
-	private static EntityManager entitymanager = ConnectJPA.getEntityManager();
+//	private static EntityManager entitymanager = ConnectJPA.getEntityManager();
 	private static final Logger LOGGER = LogManager.getLogger(DataPersist.class);
 	private static GestionEquipo<Object> gestion = new GestionEquipo<>();
-	
+
 	public void dataPersist() {
 		try {
 			persistEquipos();
 			persistClasificacion();
 			persistCompeticion();
 		} catch (PersistenceException persistence) {
-			entitymanager.getTransaction().rollback();
 			LOGGER.error("Error - " + persistence.getMessage());
-		}catch (Exception e) {
-			entitymanager.getTransaction().rollback();
+		} catch (Exception e) {
 			LOGGER.error("Error - " + e.getMessage());
 		}
-
 	}
 
 	private void persistEquipos() throws PersistenceException {
-		
 		LOGGER.debug(" - - Entrada al método persitEquipos() - - ");
-		entitymanager.getTransaction().begin();
 		for (Equipo equipo : GenerarEquipos.generarEquipos())
-			entitymanager.persist(equipo);
-
-		entitymanager.getTransaction().commit();
-
+			gestion.insert(equipo);
 	}
 
-	private void persistClasificacion() throws PersistenceException{
+	private void persistClasificacion() throws PersistenceException {
 		List<Equipo> equipos_registrados = gestion.findAll(Equipo.class);
-		entitymanager.getTransaction().begin();
 		for (Equipo equipo : equipos_registrados) {
-			entitymanager.persist(new Clasificacion(equipo, 0, 0, 0, 0));
+			gestion.insert(new Clasificacion(equipo, 0, 0, 0, 0));
 		}
-		entitymanager.getTransaction().commit();
 	}
-
-
 
 	public void persistPartidos(List<Partido> partidos) {
 		try {
-			entitymanager.getTransaction().begin();
 			for (Partido partido : partidos) {
-				entitymanager.persist(partido);
+				gestion.insert(partido);
 			}
-			entitymanager.getTransaction().commit();
 		} catch (PersistenceException persistence) {
 			LOGGER.error("Error - " + persistence.getMessage());
-			entitymanager.getTransaction().rollback();
 		} catch (Exception e) {
 			LOGGER.error("Error - " + e.getMessage());
-			entitymanager.getTransaction().rollback();
-		}	
-		
+		}
+
 	}
 
 	private void persistCompeticion() {
 		try {
-			entitymanager.getTransaction().begin();
-			for(Competicion competicion:GenerarCompeticion.generarCompeticiones()) {
-				entitymanager.persist(competicion);
+			for (Competicion competicion : GenerarCompeticion.generarCompeticiones()) {
+				gestion.insert(competicion);
 			}
-			entitymanager.getTransaction().commit();
 		} catch (PersistenceException persistence) {
 			LOGGER.error("Error - " + persistence.getMessage());
-			entitymanager.getTransaction().rollback();
 		} catch (Exception e) {
 			LOGGER.error("Error - " + e.getMessage());
-			entitymanager.getTransaction().rollback();
 		}
 	}
-	
+
 	public void actualizarClasificacion(List<Clasificacion> nueva_clasificacion) {
 		try {
-			entitymanager.getTransaction().begin();
 			for (Clasificacion clasificacion : nueva_clasificacion) {
-				entitymanager.merge(clasificacion);
+				gestion.update(clasificacion);
 			}
-			entitymanager.getTransaction().commit();
 		} catch (PersistenceException persistence) {
 			LOGGER.error("Error - " + persistence.getMessage());
-			entitymanager.getTransaction().rollback();
 		} catch (Exception e) {
 			LOGGER.error("Error - " + e.getMessage());
-			entitymanager.getTransaction().rollback();
-		}	
-		
+		}
 	}
-	
+
 	public static void shutdown() {
-		entitymanager.close();
+		gestion.shutdown();
 	}
 }
