@@ -10,6 +10,7 @@ import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -39,7 +40,7 @@ public class Equipo {
 	@OneToMany(mappedBy = "equipo",cascade = {CascadeType.PERSIST, CascadeType.MERGE,CascadeType.REFRESH})
 	private List<Jugador> jugadores = new ArrayList<>();
 
-	@ManyToMany (cascade = CascadeType.ALL)
+	@ManyToMany (cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinTable(name = "Team_Sponsor", joinColumns = @JoinColumn(name = "id_team"), 
 			inverseJoinColumns = @JoinColumn(name = "id_sponsor"))
 	private List <Patrocinador> patrocinadores = new ArrayList<>();
@@ -114,12 +115,18 @@ public class Equipo {
 		patrocinadores.add(patrocinador);
 	}
 
+	public void agregarSponsors(List<Patrocinador> patrocinador) {
+		for (Patrocinador sponsor : patrocinador) {
+			agregarSponsor(sponsor);
+		}
+	}
+	
 	public void eliminarSponsor(Patrocinador patrocinador) {
 		patrocinadores.remove(patrocinador);
 	}
 	
-	public void agregarJugadores(List<Jugador> set) {
-		for (Jugador jugador : set) {
+	public void agregarJugadores(List<Jugador> list) {
+		for (Jugador jugador : list) {
 			agregarJugador(jugador);
 		}
 	}

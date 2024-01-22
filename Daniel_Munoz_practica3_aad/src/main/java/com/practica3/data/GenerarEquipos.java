@@ -6,19 +6,18 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import com.practica3.model.Equipo;
 import com.practica3.model.Estadio;
-import com.practica3.service.DataPersist;
+import com.practica3.model.Jugador;
+import com.practica3.model.Patrocinador;
+
 
 public class GenerarEquipos {
 	private static final DateTimeFormatter PATTERN = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 	private static ArrayList<Equipo> lista_equipos = crearEquipos();
 
 	static {
-		addJugadores(lista_equipos);
+		addJugadores();
 		addSponsors(lista_equipos);
 	}
 
@@ -50,29 +49,18 @@ public class GenerarEquipos {
 						"Nava de la Asunción", LocalDate.parse("22/07/1996", PATTERN)))));
 	}
 
-	private static void addJugadores(ArrayList<Equipo> equipos) {
-		equipos.get(0).agregarJugadores(GenerarJugadores.jugadoresBarsa());
-		equipos.get(1).agregarJugadores(GenerarJugadores.jugadoresBidasoa());
-		equipos.get(2).agregarJugadores(GenerarJugadores.jugadoresGranollers());
-		equipos.get(3).agregarJugadores(GenerarJugadores.jugadoresRioja());
-		equipos.get(4).agregarJugadores(GenerarJugadores.jugadoresValladolid());
-		equipos.get(5).agregarJugadores(GenerarJugadores.jugadoresTorrelavega());
-		equipos.get(6).agregarJugadores(GenerarJugadores.jugadoresHelvetia());
-		equipos.get(7).agregarJugadores(GenerarJugadores.jugadoresViveros());
+	private static void addJugadores() {
+		for(Equipo equipo:lista_equipos) {
+			List<Jugador>jugadores = GenerarJugadoresEquipo.getJugadoresByTeam(equipo.getNombre_equipo());
+			equipo.agregarJugadores(jugadores);
+		}
 	}
 
 	private static void addSponsors(ArrayList<Equipo> equipos) {
-
-		equipos.get(0).agregarSponsor(GenerarSponsors.sponsorAdidas());
-		equipos.get(0).agregarSponsor(GenerarSponsors.sponsorEnergy());
-		equipos.get(0).agregarSponsor(GenerarSponsors.sponsorVital());
-		equipos.get(0).agregarSponsor(GenerarSponsors.sponsorStar());
-		equipos.get(1).agregarSponsor(GenerarSponsors.sponsorPuma());
-		equipos.get(1).agregarSponsor(GenerarSponsors.sponsorConnect());
-		equipos.get(2).agregarSponsor(GenerarSponsors.sponsorSwift());
-		equipos.get(2).agregarSponsor(GenerarSponsors.sponsorGameTime());
-		equipos.get(3).agregarSponsor(GenerarSponsors.sponsorNike());
-		equipos.get(4).agregarSponsor(GenerarSponsors.sponsorMetro());
-		equipos.get(6).agregarSponsor(GenerarSponsors.sponsorConnect());
+		for(Equipo equipo:lista_equipos) {
+			List<Patrocinador>sponsors = GenerarSponsorsEquipo.getSponsorByTeam(equipo.getNombre_equipo());
+			equipo.agregarSponsors(sponsors);
+		}
+		
 	}
 }

@@ -6,7 +6,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.practica3.dao.GestionDAO;
-import com.practica3.model.Jugador;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceException;
