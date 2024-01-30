@@ -26,7 +26,7 @@ public class Fichajes <T>{
 	
 	private void intercambioJugadores() {
 		LOGGER.info("** Intercambio de jugadores entre el Barcelona y el Granollers **");
-		LOGGER.info("** BARCELONA: EI WANNE <-----> Guilherme Torriani EI y 10000 :GRANOLLERS**");
+		LOGGER.info("** BARCELONA: EI WANNE <-----> Guilherme Torriani EI y 10000 :GRANOLLERS **");
 		Equipo barcelona = gestion.find(Equipo.class, 1);
 		Equipo granollers = gestion.find(Equipo.class, 3);
 		Jugador wanne = gestion.find(Jugador.class, 6);

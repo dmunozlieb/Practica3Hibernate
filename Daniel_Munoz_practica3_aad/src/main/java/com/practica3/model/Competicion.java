@@ -1,12 +1,15 @@
 package com.practica3.model;
 
 import java.time.LocalDate;
+import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -22,17 +25,19 @@ public class Competicion {
 	private int numJornadas;
 	@Column (name = "numbers_of_teams")
 	private int numEquipos;
+	@OneToMany (mappedBy = "competicion",cascade = {CascadeType.PERSIST, CascadeType.MERGE,CascadeType.REFRESH})
+	private List<Equipo> equipos_participantes;
 	
 		
 	public Competicion() {
 		
 	}
 
-	public Competicion(String nombreCompeticion, LocalDate fechaCreacion, int numJornadas,int numEquipos) {		
+	public Competicion(String nombreCompeticion, LocalDate fechaCreacion, int numJornadas) {		
 		this.nombreCompeticion = nombreCompeticion;
 		this.fechaCreacion = fechaCreacion;
 		this.numJornadas = numJornadas;
-		this.numEquipos = numEquipos;	
+		
 	}
 
 	public Long getId() {
@@ -66,11 +71,37 @@ public class Competicion {
 	public void setNumEquipos(int numEquipos) {
 		this.numEquipos = numEquipos;
 	}
+	
+	
+
+	public int getNumJornadas() {
+		return numJornadas;
+	}
+
+	public void setNumJornadas(int numJornadas) {
+		this.numJornadas = numJornadas;
+	}
+
+	
+	
+	public List<Equipo> getEquipos_participantes() {
+		return equipos_participantes;
+	}
+
+	public void setEquipos_participantes(List<Equipo> equipos_participantes) {
+		this.equipos_participantes = equipos_participantes;
+		almacenarCompeticion(equipos_participantes);
+		setNumEquipos(equipos_participantes.size());
+	}
+	
+	public void almacenarCompeticion(List<Equipo> equipos_participantes) {
+		equipos_participantes.forEach(equipo -> equipo.setCompeticion(this));
+	}
 
 	@Override
 	public String toString() {
-		return "Competicion [id=" + id + ", nombreCompeticion=" + nombreCompeticion + ", fechaCreacion=" + fechaCreacion
-				+ ", numEquipos=" + numEquipos + "]";
+		return "Competicion [id=" + id + ", nombre de Competicion=" + nombreCompeticion + ", fecha de Creacion=" + fechaCreacion
+				+ ", número de Equipos=" + numEquipos + "]";
 	}
 	
 	

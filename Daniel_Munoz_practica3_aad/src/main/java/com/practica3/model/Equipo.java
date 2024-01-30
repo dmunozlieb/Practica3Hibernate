@@ -17,6 +17,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.PrimaryKeyJoinColumn;
@@ -33,21 +34,23 @@ public class Equipo {
 	private String nombre_equipo;
 	@Column(name = "balance", nullable = true, scale = 3)
 	private double renumeracion;
-	@OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE,CascadeType.REFRESH})
+	@OneToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH })
 	@JoinColumn(name = "id_stadium")
 	private Estadio estadio;
-	
-	@OneToMany(mappedBy = "equipo",cascade = {CascadeType.PERSIST, CascadeType.MERGE,CascadeType.REFRESH})
+
+	@OneToMany(mappedBy = "equipo", cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH })
 	private List<Jugador> jugadores = new ArrayList<>();
 
-	@ManyToMany (cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinTable(name = "Team_Sponsor", joinColumns = @JoinColumn(name = "id_team"), 
-			inverseJoinColumns = @JoinColumn(name = "id_sponsor"))
-	private List <Patrocinador> patrocinadores = new ArrayList<>();
-	
-	
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinTable(name = "Team_Sponsor", joinColumns = @JoinColumn(name = "id_team"), inverseJoinColumns = @JoinColumn(name = "id_sponsor"))
+	private List<Patrocinador> patrocinadores = new ArrayList<>();
+
+	@ManyToOne
+	@JoinColumn(name = "id_competition")
+	private Competicion competicion;
+
 	public Equipo() {
-		
+
 	}
 
 	public Equipo(String nombre_equipo, double renumeracion) {
@@ -55,11 +58,11 @@ public class Equipo {
 		this.nombre_equipo = nombre_equipo;
 		this.renumeracion = renumeracion;
 	}
-	
+
 	public Equipo(String nombre_equipo, double renumeracion, Estadio estadio) {
-		this(nombre_equipo,renumeracion);
+		this(nombre_equipo, renumeracion);
 		this.estadio = estadio;
-		
+
 	}
 
 	public double getRenumeracion() {
@@ -86,10 +89,18 @@ public class Equipo {
 		this.nombre_equipo = nombre_equipo;
 	}
 
+	public Competicion getCompeticion() {
+		return competicion;
+	}
+
+	public void setCompeticion(Competicion competicion) {
+		this.competicion = competicion;
+	}
+
 	public List<Jugador> getJugadores() {
 		return jugadores;
 	}
-	
+
 	public Estadio getEstadio() {
 		return estadio;
 	}
@@ -110,7 +121,7 @@ public class Equipo {
 		jugadores.add(jugador);
 		jugador.setEquipo(this);
 	}
-	
+
 	public void agregarSponsor(Patrocinador patrocinador) {
 		patrocinadores.add(patrocinador);
 	}
@@ -120,11 +131,11 @@ public class Equipo {
 			agregarSponsor(sponsor);
 		}
 	}
-	
+
 	public void eliminarSponsor(Patrocinador patrocinador) {
 		patrocinadores.remove(patrocinador);
 	}
-	
+
 	public void agregarJugadores(List<Jugador> list) {
 		for (Jugador jugador : list) {
 			agregarJugador(jugador);
@@ -148,6 +159,4 @@ public class Equipo {
 				+ ", estadio=" + estadio + "]";
 	}
 
-	
-	
 }

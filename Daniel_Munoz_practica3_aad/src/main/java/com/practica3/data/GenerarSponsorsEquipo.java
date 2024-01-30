@@ -6,7 +6,7 @@ import java.util.List;
 import com.practica3.model.Patrocinador;
 
 public class GenerarSponsorsEquipo {
-	private static HashMap<String, List<Patrocinador>> sponsorsEquipo;
+	private static HashMap<String, List<Patrocinador>> sponsorsEquipo = new HashMap<String, List<Patrocinador>>();
 	
 	static {
 		sponsorsEquipo.put("BARÇA", List.of(GenerarSponsors.sponsorAdidas(), GenerarSponsors.sponsorStar(), GenerarSponsors.sponsorVital()

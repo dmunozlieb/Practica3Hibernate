@@ -25,15 +25,15 @@ public class Liga {
 	public static void ejecutarLiga() {
 		inicializarGestionYPersistencia();
 		clasificacion = gestion.findAll(Clasificacion.class);
+		LOGGER.info(" ##  ");
+
 		LOGGER.info(" * * * * LIGA ASOBAL * * * * ");
 		LOGGER.info(" --------------------------- ");
 		int total_jornadas = clasificacion.size() - 1;
 		int mitadEquipo = clasificacion.size() / 2;
 		realizarJornada(total_jornadas,  mitadEquipo);
 		persistencia.persistPartidos(partidos_liga);
-		persistencia.actualizarClasificacion(clasificacion);	
 		traspasos();
-		DataPersist.shutdown();	
 	}
 	
 	private static void inicializarGestionYPersistencia() {
@@ -73,6 +73,8 @@ public class Liga {
 						generarPartido((jornada + 1), equipo_local, equipo_visitante, goles_locales, goles_visitantes));
 
 			}
+			// actualizamos en cada jornada la clasificacion
+			persistencia.actualizarClasificacion(clasificacion);				
 			mostrarResultados();
 			//Rotación de partidos
 			Collections.rotate(clasificacion.subList(1, clasificacion.size()), 1);
@@ -98,12 +100,6 @@ public class Liga {
 		return (int) (Math.random() * 6);
 	}
 
-//	private static void sumarPuntuacion(int posicion_lista, int puntuacion_sumar) {
-//		int puntuacion_total = clasificacion.get(posicion_lista).getPuntuacion();
-//		puntuacion_total += puntuacion_sumar;
-//		clasificacion.get(posicion_lista).setPuntuacion(puntuacion_total);
-//	}
-	
 	private static void empate(int posicion_equipolocal, int posicion_equipovisitante) {
 		int empate_total_local = clasificacion.get(posicion_equipolocal).getPartidos_empatados();
 		int empate_total_visitante = clasificacion.get(posicion_equipovisitante).getPartidos_empatados();

@@ -36,7 +36,7 @@ public class DataPersist {
 
 	private void persistEquipos() throws PersistenceException {
 		LOGGER.debug(" - - Entrada al método persitEquipos() - - ");
-		for (Equipo equipo : GenerarEquipos.generarEquipos())
+		for (Equipo equipo : GenerarEquipos.generarEquipos()) 
 			gestion.insert(equipo);
 	}
 
@@ -62,9 +62,9 @@ public class DataPersist {
 
 	private void persistCompeticion() {
 		try {
-			for (Competicion competicion : GenerarCompeticion.generarCompeticiones()) {
-				gestion.insert(competicion);
-			}
+			Competicion liga = GenerarCompeticion.generarCompeticion();
+			liga.setEquipos_participantes(GenerarEquipos.generarEquipos());
+			gestion.insert(liga);
 		} catch (PersistenceException persistence) {
 			LOGGER.error("Error - " + persistence.getMessage());
 		} catch (Exception e) {
