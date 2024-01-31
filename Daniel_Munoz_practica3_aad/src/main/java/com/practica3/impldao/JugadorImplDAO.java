@@ -14,40 +14,64 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceException;
 import jakarta.persistence.Query;
 
-public class JugadorImplDAO implements ConsultasJugadorDAO{
-	
+public class JugadorImplDAO implements ConsultasJugadorDAO {
+
 	private EntityManager etManager = ConnectJPA.getEntityManager();
 	private static final Logger LOGGER = LogManager.getLogger(Fichajes.class);
 
-
 	@Override
 	public List<Jugador> getJugadoresEquipo(int id_equipo) {
-		
+
 		try {
-			Query query = etManager.createQuery("select j from Jugador j join j.equipo e where e.id_equipo = :id_equipo", Jugador.class);
+			Query query = etManager.createQuery(
+					"select j from Jugador j join j.equipo e where e.id_equipo = :id_equipo", Jugador.class);
 			query.setParameter("id_equipo", id_equipo);
 			return query.getResultList();
-		}catch (IllegalStateException e) {
+		} catch (IllegalStateException e) {
 			LOGGER.error(e.getMessage());
-		}catch (PersistenceException e) {
+		} catch (PersistenceException e) {
 			LOGGER.error(e.getMessage());
-		}catch (Exception e) {
+		} catch (Exception e) {
 			LOGGER.error(e.getMessage());
 		}
-		
+
 		return null;
 	}
 
 	@Override
-	public double getEdadPromedioJugadores(int id_equipo) {
-		// TODO Auto-generated method stub
+	public Object getEdadPromedioJugadores(int id_equipo) {
+		try {
+			Query query = etManager.createNativeQuery(
+					"select avg(DATEDIFF(curdate(), birth_date) / 365) from player where id_team = :idteam",
+					Object.class);
+			query.setParameter("idteam", id_equipo);
+			return query.getSingleResult();
+		} catch (IllegalStateException e) {
+			LOGGER.error(e.getMessage());
+		} catch (PersistenceException e) {
+			LOGGER.error(e.getMessage());
+		} catch (Exception e) {
+			LOGGER.error(e.getMessage());
+		}
 		return 0;
 	}
 
 	@Override
-	public int getDeportistasMayorDe23() {
-		// TODO Auto-generated method stub
-		return 0;
+	public List<Object[]> getDeportistasMayorDe23() {
+		try {
+			Query query = etManager.createNativeQuery(
+					"select nationality, count(*) from player where DATEDIFF(curdate(), birth_date)/365 > 23 group by nationality",
+					Object.class);
+			
+			return query.getResultList();
+		} catch (IllegalStateException e) {
+			LOGGER.error(e.getMessage());
+		} catch (PersistenceException e) {
+			LOGGER.error(e.getMessage());
+		} catch (Exception e) {
+			LOGGER.error(e.getMessage());
+		}
+		return null;
 	}
 
 	@Override

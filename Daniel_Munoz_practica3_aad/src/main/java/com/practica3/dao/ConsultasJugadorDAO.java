@@ -10,8 +10,8 @@ import com.practica3.model.Patrocinador;
 public interface ConsultasJugadorDAO {
 	
 	List<Jugador> getJugadoresEquipo(int id_equipo);
-	double getEdadPromedioJugadores(int id_equipo);
-	int getDeportistasMayorDe23();
+	Object getEdadPromedioJugadores(int id_equipo);
+	List<Object[]> getDeportistasMayorDe23();
 	List<Jugador> getJugadoresOrdenados(String criterio);
 	List<Jugador> getJugadoresCompeticion();
 }

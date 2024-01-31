@@ -5,23 +5,26 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.practica3.dao.ConsultasEquipoDAO;
+import com.practica3.dao.ConsultasPatrocinadorDAO;
 import com.practica3.liga.Fichajes;
-import com.practica3.model.Equipo;
+import com.practica3.model.Patrocinador;
 import com.practica3.service.ConnectJPA;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceException;
 import jakarta.persistence.Query;
 
-public class EquipoImplDAO implements ConsultasEquipoDAO {
+public class PatrocinadorImplDAO implements ConsultasPatrocinadorDAO {
+
 	private static final Logger LOGGER = LogManager.getLogger(Fichajes.class);
 	private EntityManager etManager = ConnectJPA.getEntityManager();
 
 	@Override
-	public List<Equipo> getEquiposCompeticion() {
+	public List<Patrocinador> getPatrocinadoresEquipo(int id_equipo) {
 		try {
-			Query query = etManager.createQuery("select e from Equipo e join e.competicion", Equipo.class);
+			Query query = etManager.createQuery(
+					"select p from Equipo e join e.patrocinadores p where e.id_equipo = :idequipo", Patrocinador.class);
+			query.setParameter("idequipo", id_equipo);
 			return query.getResultList();
 		} catch (IllegalStateException e) {
 			LOGGER.error(e.getMessage());
@@ -34,10 +37,11 @@ public class EquipoImplDAO implements ConsultasEquipoDAO {
 	}
 
 	@Override
-	public List<Equipo> getEquiposMasPuntos() {
+	public List<Object[]> getJugadoresYPatrocinadores(int id_equipo) {
 		try {
 			Query query = etManager.createQuery(
-					"select e from Clasificacion c join c.equipo e order by c.puntuacion desc limit 3", Equipo.class);
+					"select distinct j,p from Jugador j join j.equipo e join e.patrocinadores p where e.id_equipo = :idequipo");
+			query.setParameter("idequipo", id_equipo);
 			return query.getResultList();
 		} catch (IllegalStateException e) {
 			LOGGER.error(e.getMessage());
@@ -50,18 +54,8 @@ public class EquipoImplDAO implements ConsultasEquipoDAO {
 	}
 
 	@Override
-	public List<Equipo> getEquiposMenosPuntos() {
-		try {
-			Query query = etManager.createQuery(
-					"select e from Clasificacion c join c.equipo e order by c.puntuacion asc limit 3", Equipo.class);
-			return query.getResultList();
-		} catch (IllegalStateException e) {
-			LOGGER.error(e.getMessage());
-		} catch (PersistenceException e) {
-			LOGGER.error(e.getMessage());
-		} catch (Exception e) {
-			LOGGER.error(e.getMessage());
-		}
+	public List<Patrocinador> getPatrocinadoresComunes(int id_equipo, int id_equipo2) {
+		// TODO Auto-generated method stub
 		return null;
 	}
 

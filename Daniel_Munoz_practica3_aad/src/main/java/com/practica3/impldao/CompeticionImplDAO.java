@@ -14,21 +14,21 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceException;
 import jakarta.persistence.Query;
 
-public class CompeticionImplDAO implements ConsultasCompeticionDAO{
-	
+public class CompeticionImplDAO implements ConsultasCompeticionDAO {
+
 	private static final Logger LOGGER = LogManager.getLogger(Fichajes.class);
 	private EntityManager etManager = ConnectJPA.getEntityManager();
-	
+
 	@Override
 	public List<Competicion> getCompeticion() {
 		try {
-			Query query = etManager.createNativeQuery("select * from competition",Competicion.class);
+			Query query = etManager.createNativeQuery("select * from competition", Competicion.class);
 			return query.getResultList();
-		}catch (IllegalStateException e) {
+		} catch (IllegalStateException e) {
 			LOGGER.error(e.getMessage());
-		}catch (PersistenceException e) {
+		} catch (PersistenceException e) {
 			LOGGER.error(e.getMessage());
-		}catch (Exception e) {
+		} catch (Exception e) {
 			LOGGER.error(e.getMessage());
 		}
 		return null;
@@ -37,14 +37,13 @@ public class CompeticionImplDAO implements ConsultasCompeticionDAO{
 	@Override
 	public void getIncorporaciones() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void getEnumFichajes() {
 		// TODO Auto-generated method stub
-		
+
 	}
-	
-	
+
 }

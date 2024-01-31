@@ -29,9 +29,11 @@ public class Liga {
 
 		LOGGER.info(" * * * * LIGA ASOBAL * * * * ");
 		LOGGER.info(" --------------------------- ");
+		imprimirClasificacion();
 		int total_jornadas = clasificacion.size() - 1;
 		int mitadEquipo = clasificacion.size() / 2;
 		realizarJornada(total_jornadas,  mitadEquipo);
+		imprimirClasificacion();
 		persistencia.persistPartidos(partidos_liga);
 		traspasos();
 	}
@@ -74,7 +76,8 @@ public class Liga {
 
 			}
 			// actualizamos en cada jornada la clasificacion
-			persistencia.actualizarClasificacion(clasificacion);				
+			persistencia.actualizarClasificacion(clasificacion);
+			if(jornada == total_jornadas/2)	imprimirClasificacion();
 			mostrarResultados();
 			//Rotación de partidos
 			Collections.rotate(clasificacion.subList(1, clasificacion.size()), 1);
@@ -142,5 +145,11 @@ public class Liga {
 		fichajes.fichajesTemporada();
 	}
 	
+	private static void imprimirClasificacion() {
+		LOGGER.info("#### 8. Obtener clasificacion. ####");
+		List<Clasificacion> clasificaciones = gestion.findAll(Clasificacion.class);
+		clasificaciones.forEach(clasificacion -> LOGGER.info(clasificacion.toString()));
+		LOGGER.info("##################### FIN Consulta 8 #################################");
+	}
 	
 }
