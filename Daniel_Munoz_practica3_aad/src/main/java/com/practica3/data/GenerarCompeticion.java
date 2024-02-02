@@ -10,7 +10,8 @@ public class GenerarCompeticion {
 	private static final DateTimeFormatter PATTERN = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 	
 	
-	public static Competicion generarCompeticion(){
-		return new Competicion("Liga Asobal", LocalDate.parse("10/09/2023", PATTERN), 5);
+	public static List<Competicion> generarCompeticion(){
+		return List.of(new Competicion("Liga Asobal", LocalDate.parse("10/09/2023", PATTERN), 5),
+				new Competicion("Liga Asobal", LocalDate.parse("10/09/2024", PATTERN), 5));
 	}
 }

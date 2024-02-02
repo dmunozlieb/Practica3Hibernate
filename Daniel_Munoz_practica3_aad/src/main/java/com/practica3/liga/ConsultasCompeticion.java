@@ -13,6 +13,7 @@ import com.practica3.impldao.JugadorImplDAO;
 import com.practica3.impldao.PatrocinadorImplDAO;
 import com.practica3.model.Competicion;
 import com.practica3.model.Equipo;
+import com.practica3.model.Fichaje_historia;
 import com.practica3.model.Jugador;
 import com.practica3.model.Patrocinador;
 
@@ -32,6 +33,9 @@ public class ConsultasCompeticion {
 		ejecutarConsulta6();
 		ejecutarConsulta7();
 		ejecutarConsulta9();
+		ejecutarConsulta10();
+		ejecutarConsulta11();
+		ejecutarConsulta12();
 	}
 
 	private static void ejecutarConsulta1() {
@@ -101,5 +105,25 @@ public class ConsultasCompeticion {
 		LOGGER.info("## TOP 3 EQUIPOS MENOS PUNTOS ##");
 		equipos_menos_puntos.forEach(equipo -> LOGGER.info(equipo.toString()));
 		LOGGER.info("##################### FIN Consulta 9 #################################");
+	}
+	
+	private static void ejecutarConsulta10() {
+		LOGGER.info("#### 10. Obtener los nuevos jugadores incorporados. ####");
+		List<Jugador> jugadores_incorporados = competicionDAO.getIncorporaciones();
+		jugadores_incorporados.forEach(jugador -> LOGGER.info(jugador.toString()));
+		LOGGER.info("##################### FIN Consulta 10 #################################");
+	}
+	
+	private static void ejecutarConsulta11() {
+		LOGGER.info("#### 11. Obtener fichajes entre equipos realizados. ####");
+		List<Fichaje_historia> fichajes_nuevos = competicionDAO.getEnumFichajes();
+		fichajes_nuevos.forEach(fichaje -> LOGGER.info(fichaje.toString()));
+		LOGGER.info("##################### FIN Consulta 11 #################################");
+	}
+	private static void ejecutarConsulta12() {
+		LOGGER.info("#### 12. Obtener recuento de jugadores de la competicion. ####");
+		Object total_jugadores = jugadorDAO.getJugadoresCompeticion();
+		LOGGER.info(total_jugadores);
+		LOGGER.info("##################### FIN Consulta 12 #################################");
 	}
 }

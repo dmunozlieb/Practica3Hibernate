@@ -62,9 +62,13 @@ public class DataPersist {
 
 	private void persistCompeticion() {
 		try {
-			Competicion liga = GenerarCompeticion.generarCompeticion();
-			liga.setEquipos_participantes(GenerarEquipos.generarEquipos());
-			gestion.insert(liga);
+			List<Competicion> competiciones = GenerarCompeticion.generarCompeticion();
+			for(Competicion comp : competiciones) {
+				comp.almacenarCompeticion(GenerarEquipos.generarEquipos());
+				gestion.insert(comp);
+			}
+			
+			
 		} catch (PersistenceException persistence) {
 			LOGGER.error("Error - " + persistence.getMessage());
 		} catch (Exception e) {

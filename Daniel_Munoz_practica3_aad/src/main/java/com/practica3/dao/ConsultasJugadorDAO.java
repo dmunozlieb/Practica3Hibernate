@@ -13,5 +13,5 @@ public interface ConsultasJugadorDAO {
 	Object getEdadPromedioJugadores(int id_equipo);
 	List<Object[]> getDeportistasMayorDe23();
 	List<Jugador> getJugadoresOrdenados(String criterio);
-	List<Jugador> getJugadoresCompeticion();
+	Object getJugadoresCompeticion();
 }

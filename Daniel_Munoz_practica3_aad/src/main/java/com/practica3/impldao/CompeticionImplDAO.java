@@ -8,6 +8,8 @@ import org.apache.logging.log4j.Logger;
 import com.practica3.dao.ConsultasCompeticionDAO;
 import com.practica3.liga.Fichajes;
 import com.practica3.model.Competicion;
+import com.practica3.model.Fichaje_historia;
+import com.practica3.model.Jugador;
 import com.practica3.service.ConnectJPA;
 
 import jakarta.persistence.EntityManager;
@@ -35,15 +37,34 @@ public class CompeticionImplDAO implements ConsultasCompeticionDAO {
 	}
 
 	@Override
-	public void getIncorporaciones() {
-		// TODO Auto-generated method stub
-
+	public List<Jugador> getIncorporaciones() {
+		
+		try {
+			Query query = etManager.createNamedQuery("Jugador.jugadoresNuevos");
+			return query.getResultList();
+		} catch (IllegalStateException e) {
+			LOGGER.error(e.getMessage());
+		} catch (PersistenceException e) {
+			LOGGER.error(e.getMessage());
+		} catch (Exception e) {
+			LOGGER.error(e.getMessage());
+		}
+		return null;
 	}
 
 	@Override
-	public void getEnumFichajes() {
-		// TODO Auto-generated method stub
-
+	public List<Fichaje_historia> getEnumFichajes() {
+		try {
+			Query query = etManager.createQuery("select f from Fichaje_historia f");
+			return query.getResultList();
+		} catch (IllegalStateException e) {
+			LOGGER.error(e.getMessage());
+		} catch (PersistenceException e) {
+			LOGGER.error(e.getMessage());
+		} catch (Exception e) {
+			LOGGER.error(e.getMessage());
+		}
+		return null;
 	}
 
 }

@@ -62,7 +62,7 @@ public class JugadorImplDAO implements ConsultasJugadorDAO {
 			Query query = etManager.createNativeQuery(
 					"select nationality, count(*) from player where DATEDIFF(curdate(), birth_date)/365 > 23 group by nationality",
 					Object.class);
-			
+
 			return query.getResultList();
 		} catch (IllegalStateException e) {
 			LOGGER.error(e.getMessage());
@@ -81,8 +81,19 @@ public class JugadorImplDAO implements ConsultasJugadorDAO {
 	}
 
 	@Override
-	public List<Jugador> getJugadoresCompeticion() {
-		// TODO Auto-generated method stub
+	public Object getJugadoresCompeticion() {
+		try {
+			Query query = etManager.createQuery(
+					"select count(j) from Jugador j join j.equipo e join e.competicion c where YEAR(c.fechaCreacion) = 2024");
+
+			return query.getSingleResult();
+		} catch (IllegalStateException e) {
+			LOGGER.error(e.getMessage());
+		} catch (PersistenceException e) {
+			LOGGER.error(e.getMessage());
+		} catch (Exception e) {
+			LOGGER.error(e.getMessage());
+		}
 		return null;
 	}
 

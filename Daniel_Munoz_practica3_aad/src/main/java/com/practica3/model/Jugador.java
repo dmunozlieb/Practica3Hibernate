@@ -9,10 +9,12 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.NamedQuery;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "Player")
+@NamedQuery(name = "Jugador.jugadoresNuevos", query = "select j from Jugador j JOIN j.equipo e join e.competicion where YEAR(j.fecha_incorporacion) = YEAR(CURRENT_DATE())")
 public class Jugador {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,6 +32,8 @@ public class Jugador {
 	private Integer altura;
 	@Column(name = "weight", nullable = false)
 	private Integer peso;
+	@Column(name = "joining_date")
+	private LocalDate fecha_incorporacion;
 	@ManyToOne
 	@JoinColumn(name = "id_team")
 	private Equipo equipo;
@@ -38,7 +42,8 @@ public class Jugador {
 
 	}
 
-	public Jugador(String nombre, LocalDate fecha_nacimiento, String nacionalidad, String posicion, Integer altura, Integer peso) {
+	public Jugador(String nombre, LocalDate fecha_nacimiento, String nacionalidad, String posicion, Integer altura,
+			Integer peso) {
 
 		this.nombre = nombre;
 		this.fecha_nacimiento = fecha_nacimiento;
@@ -48,7 +53,11 @@ public class Jugador {
 		this.peso = peso;
 	}
 
-	
+	public Jugador(String nombre, LocalDate fecha_nacimiento, String nacionalidad, String posicion, Integer altura,
+			Integer peso, LocalDate fecha_incorporacion) {
+		this(nombre, fecha_nacimiento, nacionalidad, posicion, altura, peso);
+		this.fecha_incorporacion = fecha_incorporacion;
+	}
 
 	public LocalDate getFecha_nacimiento() {
 		return fecha_nacimiento;
@@ -116,9 +125,9 @@ public class Jugador {
 
 	@Override
 	public String toString() {
-		return "Jugador [id_jugador=" + id_jugador + ", nombre=" + nombre + ", fecha nacimiento=" + fecha_nacimiento + ", nacionalidad="
-				+ nacionalidad + ", posicion=" + posicion + ", altura=" + altura + ", peso=" + peso + ", equipo="
-				+ equipo + "]\n";
+		return "Jugador [id_jugador=" + id_jugador + ", nombre=" + nombre + ", fecha nacimiento=" + fecha_nacimiento
+				+ ", nacionalidad=" + nacionalidad + ", posicion=" + posicion + ", altura=" + altura + ", peso=" + peso
+				+ ", equipo=" + equipo + "]\n";
 	}
 
 }
