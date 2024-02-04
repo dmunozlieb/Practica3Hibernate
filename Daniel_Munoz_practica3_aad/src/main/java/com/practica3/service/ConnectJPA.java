@@ -5,6 +5,10 @@ import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 import jakarta.persistence.PersistenceException;
 
+/*** Esta clase realiza/se encarga de devolver la conexión a la base de datos. * 
+ * @author Daniel Muñoz */
+
+
 public class ConnectJPA {
 
 	private static EntityManagerFactory emFactory;

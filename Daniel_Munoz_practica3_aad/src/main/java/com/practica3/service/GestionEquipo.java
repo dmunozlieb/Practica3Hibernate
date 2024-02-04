@@ -11,6 +11,10 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceException;
 import jakarta.persistence.TypedQuery;
 
+/*** Esta clase realiza/se encarga de realizar operaciones CRUD de manera genérica. * 
+ * @author Daniel Muñoz */
+
+
 public class GestionEquipo<T> implements GestionDAO<T> {
 
 	private EntityManager entitymanager = ConnectJPA.getEntityManager();

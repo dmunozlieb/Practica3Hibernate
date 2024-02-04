@@ -13,6 +13,10 @@ import com.practica3.model.Partido;
 import com.practica3.service.DataPersist;
 import com.practica3.service.GestionEquipo;
 
+/*** Esta clase realiza/se encarga de realizar la simulación de la liga, generar partidos y actualizar
+ * clasificación. * 
+ * @author Daniel Muñoz */
+
 public class Liga {
 
 	private static final Logger LOGGER = LogManager.getLogger(Liga.class);
@@ -25,7 +29,7 @@ public class Liga {
 	public static void ejecutarLiga() {
 		inicializarGestionYPersistencia();
 		clasificacion = gestion.findAll(Clasificacion.class);
-		LOGGER.info(" ##  ");
+		
 
 		LOGGER.info(" * * * * LIGA ASOBAL * * * * ");
 		LOGGER.info(" --------------------------- ");

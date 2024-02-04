@@ -16,6 +16,9 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceException;
 import jakarta.persistence.Query;
 
+/*** Esta clase realiza/se encarga de generar consultas relacionadas con la competicion. * 
+ * @author Daniel Muñoz */
+
 public class CompeticionImplDAO implements ConsultasCompeticionDAO {
 
 	private static final Logger LOGGER = LogManager.getLogger(Fichajes.class);

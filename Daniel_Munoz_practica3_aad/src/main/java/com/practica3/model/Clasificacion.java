@@ -1,5 +1,8 @@
 package com.practica3.model;
 
+/*** Entity Clasificación * 
+ * @author Daniel Muñoz */
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

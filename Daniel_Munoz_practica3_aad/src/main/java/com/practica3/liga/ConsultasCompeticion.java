@@ -2,6 +2,7 @@ package com.practica3.liga;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import org.apache.logging.log4j.LogManager;
@@ -16,6 +17,10 @@ import com.practica3.model.Equipo;
 import com.practica3.model.Fichaje_historia;
 import com.practica3.model.Jugador;
 import com.practica3.model.Patrocinador;
+import com.practica3.service.GestionEquipo;
+
+/*** Esta clase realiza/se encarga ejecutar todas las consultas de la 2 parte. * 
+ * @author Daniel Muñoz */
 
 public class ConsultasCompeticion {
 
@@ -24,6 +29,7 @@ public class ConsultasCompeticion {
 	private static CompeticionImplDAO competicionDAO = new CompeticionImplDAO();
 	private static EquipoImplDAO equipoDAO = new EquipoImplDAO();
 	private static PatrocinadorImplDAO patrocinadorDAO = new PatrocinadorImplDAO();
+	private static GestionEquipo<Object> gestion = new GestionEquipo<>();
 	public static void ejecutarConsultas() {
 		ejecutarConsulta1();
 		ejecutarConsulta2();
@@ -36,6 +42,8 @@ public class ConsultasCompeticion {
 		ejecutarConsulta10();
 		ejecutarConsulta11();
 		ejecutarConsulta12();
+		ejecutarConsulta13();
+		ejecutarConsulta14();
 	}
 
 	private static void ejecutarConsulta1() {
@@ -125,5 +133,47 @@ public class ConsultasCompeticion {
 		Object total_jugadores = jugadorDAO.getJugadoresCompeticion();
 		LOGGER.info(total_jugadores);
 		LOGGER.info("##################### FIN Consulta 12 #################################");
+	}
+	
+	private static void ejecutarConsulta13() {
+		LOGGER.info("#### 13. Obtener patrocinadores comunes. ####");
+		Equipo barsa = gestion.find(Equipo.class, 1); 
+		Equipo torrelavega = gestion.find(Equipo.class, 6); 
+		List<Patrocinador> patrocinadores_comunes = patrocinadorDAO.getPatrocinadoresComunes(barsa,torrelavega);
+		patrocinadores_comunes.forEach(patrocinador -> LOGGER.info(patrocinador.toString()));
+		LOGGER.info("##################### FIN Consulta 13 #################################");
+	}
+	
+	private static void ejecutarConsulta14() {
+		LOGGER.info("#### 14. Consulta criteria. ####");
+		LOGGER.info("### Jugadores filtrados por nacionalidad. ");
+
+		Optional<String>nombre = Optional.empty();
+		Optional<String>nacionalidad = Optional.of("Suecia");
+		Optional<String>posicion = Optional.empty();
+		Optional<Integer>altura = Optional.empty();
+		Optional<Integer>peso = Optional.empty();
+
+		List<Jugador> jugadores = jugadorDAO.getJugadoresOrdenados(nombre,nacionalidad,posicion,altura,peso);
+		jugadores.forEach(jugador -> LOGGER.info(jugador.toString()));
+		
+		LOGGER.info("### Jugadores filtrados por nacionalidad y posición.");
+		
+		nacionalidad = Optional.of("España");
+		posicion = Optional.of("Portero");
+		
+		jugadores = jugadorDAO.getJugadoresOrdenados(nombre,nacionalidad,posicion,altura,peso);
+		jugadores.forEach(jugador -> LOGGER.info(jugador.toString()));
+		
+		LOGGER.info("### Jugadores filtrados por nacionalidad, posición y altura.");
+		
+		nacionalidad = Optional.of("España");
+		posicion = Optional.of("Portero");
+		altura = Optional.of(188);
+		
+		
+		jugadores = jugadorDAO.getJugadoresOrdenados(nombre,nacionalidad,posicion,altura,peso);
+		jugadores.forEach(jugador -> LOGGER.info(jugador.toString()));
+		LOGGER.info("##################### FIN Consulta 14 #################################");
 	}
 }

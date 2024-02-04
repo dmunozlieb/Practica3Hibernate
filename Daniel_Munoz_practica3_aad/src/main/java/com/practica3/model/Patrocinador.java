@@ -1,11 +1,18 @@
 package com.practica3.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
+
+/*** Entity Patrocinador * 
+ * @author Daniel Muñoz */
 
 @Entity
 @Table (name = "sponsor")
@@ -20,6 +27,8 @@ public class Patrocinador {
 	private String tipo_patrocinio;
 	@Column (name = "sponsor_amount", scale = 3)
 	private Double montoPatrocinio;
+	@ManyToMany(mappedBy = "patrocinadores")
+	private List<Equipo> equipos_patrocinados = new ArrayList<>();
 	
 	public Patrocinador() {
 		
@@ -40,6 +49,10 @@ public class Patrocinador {
 		this.id_patrocinador = id_patrocinador;
 	}
 
+	public void agregarEquipoPatrocinado(Equipo equipo) {
+		equipos_patrocinados.add(equipo);
+	}
+	
 	public String getNombre_patrocinador() {
 		return nombre_patrocinador;
 	}
@@ -62,6 +75,15 @@ public class Patrocinador {
 
 	public void setMontoPatrocinio(Double montoPatrocinio) {
 		this.montoPatrocinio = montoPatrocinio;
+	}
+	
+
+	public List<Equipo> getEquipos_patrocinados() {
+		return equipos_patrocinados;
+	}
+
+	public void setEquipos_patrocinados(List<Equipo> equipos_patrocinados) {
+		this.equipos_patrocinados = equipos_patrocinados;
 	}
 
 	@Override

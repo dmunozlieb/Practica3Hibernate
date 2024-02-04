@@ -1,16 +1,11 @@
 package com.practica3.model;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import jakarta.persistence.CascadeType;
-import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
-import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -20,8 +15,10 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
-import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Table;
+
+/*** Entity Equipo * 
+ * @author Daniel Muñoz */
 
 @Entity
 @Table(name = "Team")
@@ -41,8 +38,8 @@ public class Equipo {
 	@OneToMany(mappedBy = "equipo", cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH })
 	private List<Jugador> jugadores = new ArrayList<>();
 
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinTable(name = "Team_Sponsor", joinColumns = @JoinColumn(name = "id_team"), inverseJoinColumns = @JoinColumn(name = "id_sponsor"))
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "team_sponsor", joinColumns = @JoinColumn(name = "id_team",nullable = false), inverseJoinColumns = @JoinColumn(name = "id_sponsor",nullable = false))
 	private List<Patrocinador> patrocinadores = new ArrayList<>();
 
 	@ManyToOne
@@ -124,6 +121,7 @@ public class Equipo {
 
 	public void agregarSponsor(Patrocinador patrocinador) {
 		patrocinadores.add(patrocinador);
+		patrocinador.agregarEquipoPatrocinado(this);
 	}
 
 	public void agregarSponsors(List<Patrocinador> patrocinador) {

@@ -14,6 +14,9 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceException;
 import jakarta.persistence.Query;
 
+/*** Esta clase realiza/se encarga de generar consultas relacionadas con los equipos. * 
+ * @author Daniel Muñoz */
+
 public class EquipoImplDAO implements ConsultasEquipoDAO {
 	private static final Logger LOGGER = LogManager.getLogger(Fichajes.class);
 	private EntityManager etManager = ConnectJPA.getEntityManager();

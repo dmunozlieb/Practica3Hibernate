@@ -9,6 +9,9 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
+/*** Entity Fichajes historial * 
+ * @author Daniel Muñoz */
+
 @Entity
 @Table(name = "transfer_history")
 public class Fichaje_historia {

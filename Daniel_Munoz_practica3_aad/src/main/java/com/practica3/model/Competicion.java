@@ -12,6 +12,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
+/*** Entity Competición * 
+ * @author Daniel Muñoz */
+
 @Entity
 @Table(name = "competition")
 public class Competicion {

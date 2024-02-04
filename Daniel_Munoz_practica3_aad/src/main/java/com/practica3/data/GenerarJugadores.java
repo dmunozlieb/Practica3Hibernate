@@ -8,6 +8,9 @@ import java.util.List;
 
 import com.practica3.model.Jugador;
 
+/*** Esta clase realiza/se encarga de Generar objetos Jugadores. * 
+ * @author Daniel Muñoz */
+
 public class GenerarJugadores {
 
 	private static final DateTimeFormatter PATTERN = DateTimeFormatter.ofPattern("dd/MM/yyyy");

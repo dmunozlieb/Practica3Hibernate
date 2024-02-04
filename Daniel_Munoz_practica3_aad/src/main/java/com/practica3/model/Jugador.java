@@ -12,6 +12,9 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.Table;
 
+/*** Entity Jugador * 
+ * @author Daniel Muñoz */
+
 @Entity
 @Table(name = "Player")
 @NamedQuery(name = "Jugador.jugadoresNuevos", query = "select j from Jugador j JOIN j.equipo e join e.competicion where YEAR(j.fecha_incorporacion) = YEAR(CURRENT_DATE())")

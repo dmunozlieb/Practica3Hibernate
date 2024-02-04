@@ -11,6 +11,9 @@ import com.practica3.model.Fichaje_historia;
 import com.practica3.model.Jugador;
 import com.practica3.service.GestionEquipo;
 
+/*** Esta clase realiza/se encarga de realizar la simulación de los fichajes. * 
+ * @author Daniel Muñoz */
+
 public class Fichajes<T> {
 
 	private static final Logger LOGGER = LogManager.getLogger(Fichajes.class);
